@@ -1,9 +1,11 @@
 import React, { useState, useMemo } from 'react';
 import cameraImg from '../../assets/camera.svg';
 
+import api from '../../services/api';
+
 import './styles.css';
 
-export default function New() {
+export default function New({ history }) {
   const [company, setCompany] = useState('');
   const [price, setPrice] = useState('');
   const [techs, setTechs] = useState('');
@@ -13,8 +15,23 @@ export default function New() {
     return thumbnail ? URL.createObjectURL(thumbnail) : null;
   }, [thumbnail]);
 
-  function handleSubmit() {
+  async function handleSubmit(evt) {
+    evt.preventDefault();
 
+    const data = new FormData();
+
+    const user_id = localStorage.getItem('user');
+
+    data.append('thumbnail', thumbnail);
+    data.append('company', company);
+    data.append('techs', techs);
+    data.append('price', price);
+
+    const response = await api.post('/spots', data, {
+      headers: { user_id }
+    });
+
+    history.push('/dashboard');
   }
 
   return <form onSubmit={handleSubmit}>
@@ -48,5 +65,7 @@ export default function New() {
       value={price}
       onChange={evt => setPrice(evt.target.value)}
     />
+
+    <button className={'btn'}>Cadastrar</button>
   </form>;
 }
