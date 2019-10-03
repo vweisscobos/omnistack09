@@ -1,0 +1,8 @@
+{
+  "name": "AirCnC",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/vweisscobos/omnistack09.git",
+  "author": "Vinicius Weiss <v.weisscobos@gmail.com>",
+  "license": "MIT"
+}
